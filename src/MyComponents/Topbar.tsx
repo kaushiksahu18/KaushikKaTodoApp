@@ -22,7 +22,7 @@ function Topbar() {
       {user.username ? (
         <div className="flex gap-4 justify-between items-center">
           <div className="flex flex-col-reverse gap-2 items-center justify-center my-4">
-            <Badge className="max-w-32" variant="default">
+            <Badge className="max-w-32 overflow-hidden" variant="default">
               {user.username.split("@")[0]}
             </Badge>
             <Avatar>
