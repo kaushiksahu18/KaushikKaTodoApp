@@ -1,0 +1,9 @@
+/* Custome styling because i am a bigner */
+@media screen and (max-width: 768px) {
+    #heroend{
+        font-size: medium;
+    }
+    #logsignPOP{
+        width: 99dvw;
+    }
+}
