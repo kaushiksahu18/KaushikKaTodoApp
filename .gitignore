@@ -26,4 +26,3 @@ dist-ssr
 # Added by me
 .idx
 package-lock.json
-src/env.tsx

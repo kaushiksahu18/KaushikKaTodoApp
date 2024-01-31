@@ -1,19 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User } from "@/store/atoms/User";
 import { Todos } from "@/store/atoms/Todos";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { BaseURL } from "@/env";
 
 function InputTodo() { 
   const setTodos = useSetRecoilState(Todos);
-  const user = useRecoilValue(User);
   let title = "";
   let description = "";
 
   return (
     <>
-    {user.username && <div className="bg-zinc-600 w-full h-[10dvh] flex gap-4 fixed bottom-0 left-0 justify-between items-center px-4">
+    {localStorage.getItem("username") && <div className="bg-zinc-600 w-full h-[10dvh] flex gap-4 fixed bottom-0 left-0 justify-between items-center px-4">
       <div className="flex gap-4 justify-between items-center">
         <Input
           id="title"
@@ -30,7 +28,7 @@ function InputTodo() {
       </div>
       <Button
         onClick={() => {
-          addTodosToDb(setTodos, title, description, user);
+          addTodosToDb(setTodos, title, description);
         }}
         type="submit"
       >
@@ -44,8 +42,7 @@ function InputTodo() {
 const addTodosToDb = async (
   setTodos: Function,
   title: string,
-  description: string,
-  user: Record<string, string>
+  description: string
 ) => {
   const url = BaseURL;
   try {
@@ -53,7 +50,8 @@ const addTodosToDb = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...user,
+        username:JSON.parse(localStorage.getItem("username")),
+        password:JSON.parse(localStorage.getItem("password")),
       },
       body: JSON.stringify({
         title,

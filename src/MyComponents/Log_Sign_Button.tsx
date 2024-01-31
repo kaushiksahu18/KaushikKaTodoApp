@@ -17,10 +17,41 @@ import { User } from "@/store/atoms/User";
 import { Todos } from "@/store/atoms/Todos";
 import { useSetRecoilState } from "recoil";
 import { BaseURL } from "@/env";
+import { useEffect } from "react";
+
+const onlyfetchTodos = async (setTodos: Function, setUser: Function) => {
+  const username: string = localStorage.getItem("username");
+  const password: string = localStorage.getItem("password");
+  const url = BaseURL;
+  try {
+    const response = await axios.get(`${url}/todos`, {
+      headers: {
+        "Content-Type": "application/json",
+        username:JSON.parse(username),
+        password:JSON.parse(password),
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      setUser({ username, password });
+      setTodos(response.data);
+    } else {
+      console.log(`Error while fetching todos: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.log("Error while fetching todos:\n");
+    console.log(error);
+  }
+};
 
 function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
   const setTodos = useSetRecoilState(Todos);
   const setUser = useSetRecoilState(User);
+
+  useEffect(() => {
+    if (localStorage.getItem("username")) {
+      onlyfetchTodos(setTodos, setUser);
+    }
+  }, []);
 
   let password = "";
   let username = "";
@@ -30,7 +61,10 @@ function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
       <DialogTrigger asChild>
         <Button>{ButtonType}</Button>
       </DialogTrigger>
-      <DialogContent id="logsignPOP" className="sm:max-w-[425px] bg-zinc-950 text-white">
+      <DialogContent
+        id="logsignPOP"
+        className="sm:max-w-[425px] bg-zinc-950 text-white"
+      >
         <DialogHeader>
           <DialogTitle>
             {ButtonType == "Login" ? "Wellcome Back" : "Wellcome"}
@@ -48,7 +82,7 @@ function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
               id="username"
               placeholder="Username"
               className="placeholder:text-zinc-800 text-zinc-800 col-span-3"
-              onChange={(e) => username = e.target.value}
+              onChange={(e) => (username = e.target.value)}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -60,7 +94,7 @@ function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
               id="password"
               placeholder="Password"
               className="placeholder:text-zinc-800 text-zinc-800 col-span-3"
-              onChange={(e) => password = e.target.value}
+              onChange={(e) => (password = e.target.value)}
             />
           </div>
         </div>
@@ -100,9 +134,11 @@ const account = async (
     if (response.status === 200 || response.status === 201) {
       const user = response.data;
       setUser(user);
+      localStorage.setItem("username", JSON.stringify(user.username));
+      localStorage.setItem("password", JSON.stringify(user.password));
       setTodos(user.todos);
-    }else{
-      console.log(`Error while ${ButtonType}: ${response.statusText}`)
+    } else {
+      console.log(`Error while ${ButtonType}: ${response.statusText}`);
     }
   } catch (error) {
     console.log(error);

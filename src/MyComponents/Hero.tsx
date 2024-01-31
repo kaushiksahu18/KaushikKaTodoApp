@@ -13,19 +13,19 @@ import { Todos } from "@/store/atoms/Todos";
 import { getUsername } from "@/store/selectors/username";
 
 function Hero() {
-  const todos = useRecoilValue(Todos);
-  const username = useRecoilValue(getUsername);
+  const todos:Object[] = useRecoilValue(Todos);
+  const username:string = useRecoilValue(getUsername);
   let a:string;
   if (username === "") {
     a = "100dvh";
   } else {
     a = "0px";
   }
-  const must = `rounded-md border relative top-[10.1dvh] h-[max(${a},79.5dvh)] w-full`;
+  const mustStyle = `rounded-md relative top-[10.1dvh] lg:top-[15dvh] h-[max(${a},79.5dvh)] lg:h-[75dvh] w-full`;
   return (
     <>
       {todos.length === 0 ? (
-        <div className={must}>
+        <div className={mustStyle}>
           <div className="selection:bg-zinc-900 tracking-[-0.5vw] text-white text-[6dvw] absolute left-12">
             <h1>Kaushik</h1>
           </div>
@@ -40,8 +40,8 @@ function Hero() {
           </div>
         </div>
       ) : (
-        <div className="rounded-md border relative top-[11dvh]">
-          <ScrollArea className="h-[79.5dvh] w-full">
+        <div className={mustStyle}>
+          <ScrollArea className="h-[75dvh] w-[100dvw]">
             <Table>
               <TableHeader>
                 <TableRow>
