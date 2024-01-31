@@ -27,8 +27,8 @@ const onlyfetchTodos = async (setTodos: Function, setUser: Function) => {
     const response = await axios.get(`${url}/todos`, {
       headers: {
         "Content-Type": "application/json",
-        username:JSON.parse(username),
-        password:JSON.parse(password),
+        username,
+        password,
       },
     });
     if (response.status === 200 || response.status === 201) {
@@ -48,7 +48,7 @@ function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
   const setUser = useSetRecoilState(User);
 
   useEffect(() => {
-    if (localStorage.getItem("username")) {
+    if (localStorage.getItem("username") !== "") {
       onlyfetchTodos(setTodos, setUser);
     }
   }, []);

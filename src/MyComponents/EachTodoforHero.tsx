@@ -39,8 +39,8 @@ const deleteTodonyId = async (id:string, setTodos: Function) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        username:JSON.parse(localStorage.getItem("username")),
-        password:JSON.parse(localStorage.getItem("password")),
+        username:localStorage.getItem("username"),
+        password:localStorage.getItem("password"),
       },
     });
     if (response.ok) {

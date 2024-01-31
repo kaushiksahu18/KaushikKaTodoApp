@@ -50,8 +50,8 @@ const addTodosToDb = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        username:JSON.parse(localStorage.getItem("username")),
-        password:JSON.parse(localStorage.getItem("password")),
+        username:localStorage.getItem("username"),
+        password:localStorage.getItem("password"),
       },
       body: JSON.stringify({
         title,
