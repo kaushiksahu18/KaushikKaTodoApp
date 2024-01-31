@@ -134,8 +134,8 @@ const account = async (
     if (response.status === 200 || response.status === 201) {
       const user = response.data;
       setUser(user);
-      localStorage.setItem("username", JSON.stringify(user.username));
-      localStorage.setItem("password", JSON.stringify(user.password));
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("password", user.password);
       setTodos(user.todos);
     } else {
       console.log(`Error while ${ButtonType}: ${response.statusText}`);

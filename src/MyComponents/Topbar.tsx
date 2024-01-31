@@ -23,7 +23,7 @@ function Topbar() {
         <div className="flex gap-4 justify-between items-center">
           <div className="flex flex-col-reverse gap-2 items-center justify-center my-4">
             <Badge className="max-w-32 overflow-hidden hidden md:block" variant="default">
-              {JSON.parse(user.username)}
+              {user.username}
             </Badge>
             <Avatar>
               <AvatarImage
