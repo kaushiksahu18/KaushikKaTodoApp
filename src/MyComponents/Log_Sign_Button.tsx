@@ -39,6 +39,13 @@ const onlyfetchTodos = async (setTodos: Function, setUser: Function) => {
     }
   } catch (error) {
     console.log("Error while fetching todos:\n");
+    if (
+      error.response.data ==
+      "Invalid username or password: Not found user in DataBase"
+    ) {
+      localStorage.setItem("username", "");
+      localStorage.setItem("password", "");
+    }
     console.log(error);
   }
 };
