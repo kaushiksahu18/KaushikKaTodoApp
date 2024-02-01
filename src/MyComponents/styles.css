@@ -1,12 +1,22 @@
+.overflow-wrap-bw {
+  overflow-wrap: anywhere;
+}
+.my-grid-col {
+  grid-template-columns: repeat(2, 1fr) 120px;
+}
+
 /* Custome styling because i am a bigner */
 @media screen and (max-width: 768px) {
-    #heroend{
-        font-size: medium;
-    }
-    #logsignPOP{
-        width: 99dvw;
-    }
-    #main-title{
-        font-size: small;
-    }
+  #heroend {
+    font-size: medium;
+  }
+  #logsignPOP {
+    width: 99dvw;
+  }
+  #main-title {
+    font-size: small;
+  }
+  #my-grid-col-sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

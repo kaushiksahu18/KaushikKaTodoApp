@@ -13,15 +13,9 @@ import { Todos } from "@/store/atoms/Todos";
 import { getUsername } from "@/store/selectors/username";
 
 function Hero() {
-  const todos:Object[] = useRecoilValue(Todos);
-  const username:string = useRecoilValue(getUsername);
-  let a:string;
-  if (username === "") {
-    a = "100dvh";
-  } else {
-    a = "0px";
-  }
-  const mustStyle = `rounded-md relative top-[10.1dvh] lg:top-[15dvh] h-[max(${a},79.5dvh)] lg:h-[75dvh] w-full`;
+  const todos: Object[] = useRecoilValue(Todos);
+  const username: string = useRecoilValue(getUsername);
+  const mustStyle = `rounded-md relative top-[10.1dvh] lg:top-[15dvh] h-[79.5dvh] lg:h-[75dvh] w-[100dvw]`;
   return (
     <>
       {todos.length === 0 ? (
@@ -41,13 +35,13 @@ function Hero() {
         </div>
       ) : (
         <div className={mustStyle}>
-          <ScrollArea className="h-[75dvh] w-[100dvw]">
+          <ScrollArea className="h-full w-[100dvw]">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Done!?</TableHead>
+                <TableRow id="my-grid-col-sm" className="grid my-grid-col pt-4 lg:pt-2">
+                  <TableHead className="self-center">Title</TableHead>
+                  <TableHead className="self-center">Description</TableHead>
+                  <TableHead className="self-center">Done!?</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

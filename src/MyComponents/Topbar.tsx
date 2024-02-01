@@ -11,7 +11,7 @@ function Topbar() {
   const setTodos = useSetRecoilState(Todos);
 
   return (
-    <div className="bg-zinc-600 w-full h-[10dvh] flex fixed top-0 left-0 justify-between items-center px-2 md:py-10 py-4">
+    <div className="z-[99] bg-zinc-600 w-full h-[10dvh] flex fixed top-0 left-0 justify-between items-center px-2 md:py-10 py-4">
       <div className="flex justify-between items-center gap-4">
         <Avatar>
           <AvatarImage src="https://img.icons8.com/papercut/60/bookmark.png" />

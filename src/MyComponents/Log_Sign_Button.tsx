@@ -43,6 +43,9 @@ const onlyfetchTodos = async (setTodos: Function, setUser: Function) => {
       error.response.data ==
       "Invalid username or password: Not found user in DataBase"
     ) {
+      console.log(
+        "Deleting your user data from your localstorage Because we can't find your user data in DataBase Creat new user and try again"
+      );
       localStorage.setItem("username", "");
       localStorage.setItem("password", "");
     }

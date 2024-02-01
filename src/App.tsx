@@ -8,7 +8,7 @@ import {
 export default function App() {
   return (
     <RecoilRoot>
-    <div className="h-[100vh] w-[100vw] overflow-hidden bg-zinc-800">
+    <div className="h-[100dvh] w-[100dvw] overflow-x-hidden overflow-y-auto bg-zinc-800">
       <Topbar />
       <Hero />
       <InputTodo />
