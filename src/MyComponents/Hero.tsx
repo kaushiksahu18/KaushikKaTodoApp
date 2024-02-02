@@ -10,11 +10,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRecoilValue } from "recoil";
 import "./styles.css";
 import { Todos } from "@/store/atoms/Todos";
-import { getUsername } from "@/store/selectors/username";
 
 function Hero() {
   const todos: Object[] = useRecoilValue(Todos);
-  const username: string = useRecoilValue(getUsername);
   const mustStyle = `rounded-md relative top-[10.1dvh] lg:top-[15dvh] h-[79.5dvh] lg:h-[75dvh] w-[100dvw]`;
   return (
     <>
