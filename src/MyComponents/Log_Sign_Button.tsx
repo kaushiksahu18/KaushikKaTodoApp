@@ -17,7 +17,7 @@ import { User } from "@/store/atoms/User";
 import { Todos } from "@/store/atoms/Todos";
 import { useSetRecoilState } from "recoil";
 import { BaseURL } from "@/env";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const onlyfetchTodos = async (setTodos: Function, setUser: Function) => {
   const username: string = localStorage.getItem("username");
@@ -66,15 +66,14 @@ function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
   let password = "";
   let username = "";
 
+  const [errorfromDB, setErrorfromDB] = useState("");
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>{ButtonType}</Button>
       </DialogTrigger>
-      <DialogContent
-        id="logsignPOP"
-        className="sm:max-w-[425px] bg-zinc-950 text-white"
-      >
+      <DialogContent id="logsignPOP" className="bg-zinc-950 text-white">
         <DialogHeader>
           <DialogTitle>
             {ButtonType == "Login" ? "Wellcome Back" : "Wellcome"}
@@ -89,33 +88,56 @@ function Log_Sign_Button({ ButtonType }: { ButtonType: string }) {
               Username
             </Label>
             <Input
+              required
               id="username"
               placeholder="Username"
               className="placeholder:text-zinc-800 text-zinc-800 col-span-3"
               onChange={(e) => (username = e.target.value)}
             />
+            {errorfromDB.toLowerCase().includes("username") && (
+              <>
+                <p className="text-red-500 col-span-3">{errorfromDB}</p>
+              </>
+            )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="password" className="text-right">
               Password
             </Label>
             <Input
+              required
               type="password"
               id="password"
               placeholder="Password"
               className="placeholder:text-zinc-800 text-zinc-800 col-span-3"
               onChange={(e) => (password = e.target.value)}
             />
+            {errorfromDB.toLowerCase().includes("password") && (
+              <>
+                <p className="text-red-500 col-span-3 max-w-[95%] flex justify-center items-center">
+                  {errorfromDB}
+                </p>
+              </>
+            )}
           </div>
         </div>
         <DialogFooter className="flex justify-between items-center gap-2">
-          <p>Click! and go to HOME:</p>
-          <DialogClose asChild>
-            <Button onClick={() => window.location.assign("/")}>Close</Button>
-          </DialogClose>
+          <div className="flex items-center gap-2">
+            <p>Click! and go to HOME:</p>
+            <DialogClose asChild>
+              <Button onClick={() => window.location.assign("/")}>Close</Button>
+            </DialogClose>
+          </div>
           <Button
             onClick={() => {
-              account(ButtonType, setUser, setTodos, password, username);
+              account(
+                ButtonType,
+                setUser,
+                setTodos,
+                password,
+                username,
+                setErrorfromDB
+              );
             }}
             type="submit"
           >
@@ -132,7 +154,8 @@ const account = async (
   setUser: Function,
   setTodos: Function,
   password: string,
-  username: string
+  username: string,
+  setErrorfromDB: Function
 ) => {
   const url = BaseURL;
   const fUrs = ButtonType === "Login" ? `${url}/login` : `${url}/signup`;
@@ -148,10 +171,11 @@ const account = async (
       localStorage.setItem("password", user.password);
       setTodos(user.todos);
     } else {
-      console.log(`Error while ${ButtonType}: ${response.statusText}`);
+      console.log(`Error while ${ButtonType}: ${response.data}`);
+      setErrorfromDB(`Error while ${ButtonType}: ${response.data}`);
     }
   } catch (error) {
-    console.log(error);
+    setErrorfromDB(error.response.data);
   }
 };
 
