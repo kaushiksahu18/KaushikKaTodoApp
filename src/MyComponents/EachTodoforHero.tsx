@@ -11,11 +11,11 @@ function EachTodoforHero() {
     <>
       {todos.map(
         (todo: {
-          id: number | string | any;
+          _id: number | string | any;
           title: string;
           description: string;
         }) => (
-          <TableRow id="my-grid-col-sm" className="w-[100dvw] overflow-y-auto overflow-x-hidden grid my-grid-col">
+          <TableRow key={todo._id} id="my-grid-col-sm" className="w-[100dvw] overflow-y-auto overflow-x-hidden grid my-grid-col">
             <TableCell className="text-white max-w[40%]">
               <p className="overflow-wrap-bw">{todo.title}</p>
             </TableCell>
@@ -24,7 +24,7 @@ function EachTodoforHero() {
             </TableCell>
             <TableCell>
               <Button
-                id={todo.id}
+                id={todo._id}
                 onClick={(e) => {
                   deleteTodoById(e.currentTarget.id, setTodos);
                 }}
@@ -43,7 +43,7 @@ function EachTodoforHero() {
 const deleteTodoById = async (id: string, setTodos: Function) => {
   const url = BaseURL;
   try {
-    const response = await fetch(`${url}/todos/${Number(id)}`, {
+    const response = await fetch(`${url}/todos/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
